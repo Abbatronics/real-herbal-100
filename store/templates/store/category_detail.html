@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+   {{ category.title}}
+{% endblock %}
+
+{% block content %}
+
+    <div class="col-md-12 ">
+        <h3>
+            {{ category.title}}
+            
+           </h3>
+        
+
+                
+            <hr style="background-color: seagreen"; href="#">
+            <div class="row">
+            {% for item in products  %}
+               
+                <a href="{% url 'product_detail' item.category.slug item.slug %}" style="font-weight: 900 ; color :seagreen";>{{ item.title  }}
+                    <div class="product card-img-align p-3">
+                        <img src= "{{item.image.url}}" class="card-img-align   flex-row ;"
+                         alt="{{ item.title }}">
+                    </div>
+                   
+                </a>
+
+                
+            {% endfor %}
+           </div>
+    </div>
+{% endblock %}

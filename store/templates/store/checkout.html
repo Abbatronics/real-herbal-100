@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+   Checkout
+{% endblock %}
+
+{% block content %} 
+<style>
+   body {
+      background-color: rgba(139, 141, 136, 0.404);
+      padding: 300px;
+      padding-top: 0;
+   }
+   
+   </style>
+   <h4 style="font-weight: 900; color: seagreen;">Checkout</h4> 
+   <hr style="background-color: seagreen"; href="#">
+   
+   <h5 style="color: grey; font-weight: 900;">Total cost: N{{ cart.get_total_cost }}</h5>
+   <form method="post" action=".">
+      {% csrf_token %}
+      {{ form|crispy }}
+        
+         <script src="https://js.paystack.co/v1/inline.js"></script>
+         <button type="button" onclick="payWithPaystack()" class="btn-sm btn-warning float-start ml-2">Checkout</button> 
+       
+   </form>
+   <script>
+      function payWithPaystack(){
+         var handler = PaystackPop.setup({
+          key: 'pk_test_4564d6bfdbefad14f935ab09686c5a2561d50142',
+          email: 'abba2dbzee@gmail.com',
+          amount: 1400000 ,
+          
+          ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+          metadata: {
+             custom_fields: [
+                {
+                    display_name: "Abba",
+                    variable_name: "mobile_number",
+                    value: "+2349035024584"
+                }
+             ]
+          },
+          callback: function(response){
+              alert('success. transaction ref is ' + response.reference);
+          },
+          onClose: function(){
+              alert('window closed');
+          }
+        });
+        handler.openIframe();
+      }
+    </script>
+    
+{% endblock %}

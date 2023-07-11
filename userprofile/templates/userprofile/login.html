@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Login{% endblock %} 
+
+{% block content %}
+<style>
+  body {
+     background-color: rgba(139, 141, 136, 0.404);
+     padding: 400px;
+     padding-top: 0;
+  }
+  .btn{
+    border-radius: 10px;
+  }
+  </style>
+
+<form method="post">
+  {% csrf_token %}
+        <fieldset class="form-group">
+            <legend style="font-weight: 900; color: seagreen;">Login</legend>
+            <hr style="background-color: seagreen"; href="#">
+
+            {{ form|crispy }}
+        </fieldset>
+  
+        <div class="form-group">
+          <button class="btn-md btn-outline-success" type="submit">Sign In</button><br>
+          Don't Have An Account? <a style="color: red;" href="{% url 'signup ' %}">Signup </a>
+
+      </div>
+</form>
+
+{% endblock content %}

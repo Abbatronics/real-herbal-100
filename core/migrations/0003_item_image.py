@@ -10,10 +10,10 @@ class Migration(migrations.Migration):
         ('core', '0002_initial'),
     ]
 
-    operations = [
-        migrations.AddField(
-            model_name='item',
-            name='image',
-            field=models.ImageField(default='default/no_image.jpg', max_length=255, upload_to=core.models.Item.image_upload_to),
-        ),
-    ]
+    #operations = [
+       # migrations.AddField(
+            #model_name='item',
+            #name='image',
+            #field=models.ImageField(default='default/no_image.jpg', max_length=255, upload_to=core.models.Item.image_upload_to),
+        #),
+    #]

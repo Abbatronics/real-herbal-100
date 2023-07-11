@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} {% endblock %} 
+
+ 
+
+{% block content %}
+<style>
+    body {
+       background-color: rgba(139, 141, 136, 0.404);
+       padding: 500px;
+       padding-top: 0;
+    }
+    
+</style>
+    <h4 style=" font-weight: 900; padding-left: 60px; color: seagreen"> {{ title }} </h4>
+    <hr style="background-color: seagreen"; href="#">
+
+    <form method="post" action="." enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button style="background-color: seagreen; color: white; border: white; margin-right:60px;">Submit</button>
+    </form>
+    
+    {% if title == 'Edit product' %}
+    
+    
+    {% endif %}
+    <a href="#" style="background-color: red; color: white; border: white; margin-bottom:60px;">Delete product </a>
+
+{% endblock %}

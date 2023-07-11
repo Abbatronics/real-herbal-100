@@ -38,20 +38,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'crispy_forms',
+    'crispy_forms',
     'django_countries',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-     'core.apps.CoreConfig',
-     'dbzee', 
-     'category',
+    'core.apps.CoreConfig',
+    'userprofile.apps.UserprofileConfig', 
+    'store.apps.StoreConfig', 
+    'django_extensions',
+    'paystack',
      
       
     
 ]
-AUTH_USER_MODEL = 'dbzee.CustomUser'
 
 
 MIDDLEWARE = [
@@ -79,6 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'store.context_processors.cart'
             ],
         },
     },
@@ -154,26 +156,34 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-   'dbzee.backends.EmailBackend'
+   #'userprofile.backends.EmailBackend'
 
 ]
 SITE_ID = 1
 
-LOGIN_URL = '/login'
+CART_SESSION_ID = 'cart'
+SESSION_COOKIE_AGE = 86400
+
+
+
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+
 # Default primary key field type
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 
-AUTHENTICATION_BACKENDS = ['dbzee.backends.EmailBackend']
+
+#AUTHENTICATION_BACKENDS = ['dbzee.backends.EmailBackend']
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STRIPE_KEY = '<your_api_key_here>'
+PAYSTACK_SECRET_KEY = ('sk_test_d2730fdb3a1d5ae2b5560fed6a45808ba30ef18c')
+PAYSTACK_PUB_KEY = ('pk_test_4564d6bfdbefad14f935ab09686c5a2561d50142')

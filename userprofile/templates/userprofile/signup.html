@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Sign up{% endblock %} 
+
+
+{% block content %}
+<style>
+  body {
+     background-color: rgba(139, 141, 136, 0.404);
+     padding: 400px;
+     padding-top: 0;
+  }
+  .btn-md btn-outline-success{
+    margin: 10px;
+  }
+  </style>
+  <h4 style="font-weight: 900; color: seagreen;">Signup </h4>
+   <hr style="background-color: seagreen"; href="#">
+
+
+  <form method="post" action=".">
+    {% csrf_token %}
+
+    {{ form|crispy }}
+    
+    <button class="btn-md btn-outline-success " type="submit">Sign Up</button><br>
+    Have An Account? <a style="color: red;" href="{% url 'login' %}">Sign in </a>
+    
+  </form>
+{% endblock  %}

@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}My Store {% endblock %} 
+
+ 
+
+{% block content %}
+
+    <h1 style=" padding-left: 60px;"> My store </h1>
+   
+    {% if messages %}
+       {% for  message in messages %}
+          <div class="px-8 py-4 bg-teal-200 text-teal-800">
+            {{message }}
+          </div>
+       {% endfor %}
+    {% endif %}
+    <h4 style="font-weight: 200; color: slategray; padding-left: 60px;">My orders </h4> 
+    <table class="table">
+      <thead>
+        <tr style="background-color: silver; color:seagreen;  ">
+          <th scope="col">Order ID</th>
+          <th scope="col">Image</th>
+          <th scope="col">Title</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead> 
+
+    <tbody>
+
+    {% for order_item in order_items %}
+      <tr>
+        <td>
+          <a href="{% url 'my_store_order_detail' order_item.order.id %}">{{order_item.order.id }}</a>
+        </td>
+        <td><img src="{{ order_item.product.get_thumbnail }}" style="width: 50px;"></td>
+
+        <td>{{ order_item.product.title }}</td>
+      
+        <td>
+          {{ order_item.quantity }}
+        </td>
+        <td>
+          <p>N {{ order_item.product.discount_price }}</p>
+        </td>
+      </tr>
+      
+    {% endfor %}
+    </tbody>
+  </table>  
+    <hr style="background-color: seagreen";>
+    
+    <a style="margin: 10px; padding-left: 60px;" href="{% url 'add_product' %}">
+      <button class="btn-md btn-outline-success" type="submit">Add product</button><br>
+    </a>
+
+
+    <h4 style="font-weight: 900; color: slategray; padding-left: 60px;">My products </h4>
+
+    {% if request.user.products.all  %}
+        <!--Grid row-->
+        <div class="">
+            {% for product in request.user.products.all %}
+            <!--Grid column-->
+            
+                <div class="col-lg-2 col-md-6 mb-4 ">
+                    <a href="{% url 'edit_product' product.id %}">
+                        <img src= "{{product.image.url}}" class="card-img-top ;"
+                       alt="">
+                    </a>
+                    <hr class="my-3">
+                    <p><strong>Status:</strong>{{product.get_status_display}}</p>
+
+                </div>
+                   
+                <div class="col-md-12">
+                  
+                   <p class="mb-0 d-flex flex-column align-items-start red-text ">
+                      <s>N{{ product.price }}</s> 10% off
+                    </p>
+  
+                    <p class=" mt-0 d-flex flex-column align-items-start font-weight">
+                      N{{ product.discount_price }} 
+                    </p>
+                    
+                </div>
+                <!--Card content-->
+  
+              </div>
+              <!--Card-->
+  
+            </div>
+            <!--Grid column-->
+  
+            {% endfor %}
+    {% else %}    
+       <p style="background-color:gray; padding-left: 70px; max-width: 250px; ">You don't have any product...</p>
+    {% endif %}
+{% endblock  %}

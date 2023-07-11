@@ -17,11 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 
 
+
+
 urlpatterns = [
-    path('', include('category.urls', namespace='category')),
-    path('', include('dbzee.urls', namespace='dbzee')),
-    path('', include('core.urls', namespace='core')), 
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls'))
+    path('', include('userprofile.urls')),
+    path('', include('store.urls')), 
+    path('', include('core.urls', namespace='core')), 
+    #path('accounts/', include('django.contrib.auth.urls')),
+    
    
 ]

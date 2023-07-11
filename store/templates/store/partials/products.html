@@ -1,0 +1,65 @@
+
+       <!--Section: Products v.3-->
+       <section class="text-center mb-4">
+
+        <!--Grid row-->
+        <div class="row wow fadeIn">
+          {% for item in object_list %}
+          <!--Grid column-->
+          <div class="col-lg-3 col-md-6 mb-4">
+
+            <!--Card-->
+            <div class="card" style="height: 100%;">
+              {% if item.image %}
+              <div class="view overlay">
+                
+                
+                <a href="{% url 'product_detail' item.category.slug item.slug %}">
+                  <div class="mask rgba-white-slight"></div>
+                  <div class="aspect-ratio-box">
+                    <img src= "{{ item.get_thumbnail }}" class="card-img-top"
+                    alt="{{ item.title  }}">
+                  </div>
+                </a>
+                <div class="card-body text-center">
+                  <h5>
+                  
+                    <a href="{{ item.get_absolute_url }}" style="font-weight :900; color :seagreen";>{{ item.title  }}
+                      <span class="badge badge-pill {% if item.get_label_display == 'New' %} danger-color {% else %} primary-color {% endif %}">{{ item.get_label_display }}</span>
+                    </a>
+
+                </h5>
+              
+                </div>
+              </div>
+              
+              {% endif %}
+              <!--Card image-->
+              <!--Card content-->
+              <div class="card-body text-center">
+                <!--Category & Title-->
+
+                 <p class="mb-1 d-flex flex-column align-items-start red-text ">
+                    <s>N{{ item.price }}</s> 10% off
+                  </p><br>
+
+                  <p class=" mt-0 d-flex flex-column align-items-start font-weight">
+                    N{{ item.discount_price }} 
+                  </p>
+                
+              </div>
+              <!--Card content-->
+
+            </div>
+            <!--Card-->
+
+          </div>
+          <!--Grid column-->
+
+          {% endfor %}
+         
+
+        </div>
+        <!--Grid row-->
+
+      </section>

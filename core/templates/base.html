@@ -7,15 +7,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Djanggo Ecommerce</title>
+
+  <title>{% block title %}{% endblock %} | HerbalExpress </title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Bootstrap core CSS -->
   <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
   <!-- Material Design Bootstrap -->
-  <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+  <link href=" {% static 'css/mdb.min.css' %}" rel="stylesheet">
   <!-- Your custom styles (optional) -->
   <link href=" {% static 'css/style.min.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+ 
   <style type="text/css">
     html,
     body,
@@ -39,7 +42,25 @@
       width: 50%;
       height: 100%;
     }
-  
+    .text{
+      background-color: rgb(80, 124, 10);
+      color: #fff;
+      border-radius: 10px;
+      border: solid #fff;
+    }
+    .form-inline{
+      margin-right: float-right;
+      background-color: seagreen;
+      border-radius: 10px;
+      border: solid 2px seagreen;
+      height: 40px;
+      
+      
+    }
+    .active{
+      background-color:seagreen;
+      border-radius: 20px;
+    }
     @media (max-width: 740px) {
 
       html,
@@ -69,55 +90,73 @@
   
   
 
-  <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar" >
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar"  >
     <div class="container">
 
       <!-- Brand -->
-      <a class="navbar-brand waves-effect" href="/">
-        <strong class="green-text">HERBAL<span class="orange-text "> EXPRESS</span></strong>
+      <a class="navbar-brand waves-effect" href="/" >
+        <strong class="green-text" style="font-weight: bold;">HERBAL<span class="orangegreen-text "> EXPRESS</span></strong>
+        
       </a>
+      
+      <div class="search" style="padding-right:  50px;">
 
+          <form method ="get" action="/search/">
+
+            <input type="#" name="query" placeholder="Search Products..."style="border-radius:5px; color:gray; padding-right:100px;" >
+            <button style=" color:seagreen;  "><i class="fa fa-search"></i></button>
+          </form>
+      </div>
+      
       <!-- Collapse -->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
+     
       <!-- Links -->
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
+             
         <!-- Left -->
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
           
-          </li>
         </ul>
 
         <!-- Right -->
         <ul class="navbar-nav nav-flex-icons">
-          
+            <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"aria-current="page" style="color:rgb(9, 9, 141)" ; href="{% url 'core:home' %}">Home</a>
+            </li>
          
             {% if request.user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link waves-effect"  href="{% url 'core:order-summary' %}">
-                {% if request.user|cart_item_count != 0 %}
-                  <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
+                <a class="nav-link {% if request.resolver_match.url_name == 'cart_view' %}active{% endif %}"  href="{% url 'cart_view' %}">
+                <i class="fas fa-shopping-cart" style="color:red;"></i>
+                {% if cart|length != 0 %}
+                  <span class="badge red  x-depth-10 mr-1"> {{ cart|length  }} </span>
                 {% endif %}
-                <i class="fas fa-shopping-cart" ></i>
-                <span class="clearfix d-none d-sm-inline-block" > Cart </span>
+                <span class="clearfix d-none d-sm-inline-block" style="color:white ;"> Cart </span>
                 </a>
-            </li>
-            <li class="nav-item">
-                 <a class="nav-link waves-effect">
+            </li> 
+            <li class="nav-item dropdown">
+                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style= "color:rgb(9, 9, 141) ;" >
                 Hi {{ user.username }}!
                 </a>
-            </li>
-             </li class="nav-item">
-                <a class="nav-link waves-effect" href="{% url 'logout' %}"> Logout</a>
+                <ul class="dropdown-menu inline-block" aria-labelledby="navbarDropdown">
+                    <a style=" color :seagreen ;text-decoration-line: underline; scroll-margin-block: 4px;" href="{% url 'myaccount' %}"><li>My account</li></a>
+                    {% if request.user.userprofile.is_vendor %}
+                      <a style="text-decoration-line: underline; color :seagreen ; scroll-margin-block: 4px;" href="{% url 'my_store' %}"><li>My Store</li></a>
+                    {% endif %}
+                    
+                    <a style="text-decoration-line: underline; color :seagreen ; scroll-margin-block: 4px;" href="#"><li>someTHING </li></a>
+                    <hr style="background-color: seagreen "; href="#">
+                    <a style="text-decoration-line: underline; color: red; scroll-margin-block: 4px;" href="{% url 'logout' %}"><li>Logout </li></a>
+                </ul>
+                
             </li>
             {% else %}
-             </li class="nav-item">
-                <a class="nav-link waves-effect" href="{% url 'login' %}"> Login</a>
+             <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}" href="{% url 'login' %}"style="color:rgb(9, 9, 141)"> Login</a>
             </li>
             {% endif %}
         </ul>
@@ -148,7 +187,25 @@
     {% block extra_script %}
     {% endblock extra_script %}
     {% include 'include/message.html' %}
-
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <!--Start of Tawk.to Script-->
+    <!--Start of Tawk.to Script-->
+  <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/64a089e7cc26a871b025c712/1h49hldf5';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
+  </script>
+  
 </body>
 
 </html>

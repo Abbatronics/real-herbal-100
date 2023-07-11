@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+   Cart
+{% endblock %}
+
+{% block content %}  
+
+    <main>
+        <div class= "container">
+            <div class="table-responsive text-nowrap">
+        <h4 style="color: seagreen; font-weight: 900;">
+            <strong> Cart</strong>
+        </h4>
+        <hr style="background-color: seagreen"; href="#">
+
+        <table class="table">
+            <thead>
+            <tr style="background-color: seagreen; color:white;  ">
+                <th scope="col">{{ product_id }}</th>
+                <th scope="col">Image</th>
+                <th scope="col">Item Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in cart %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td><img src="{{ item.product.get_thumbnail }}" style="width: 50px;"></td>
+
+                <td>{{ item.product.title }}</td>
+                
+                <td>
+                    <a href="{% url 'change_quantity' item.product.id %}?action=decrease"><i class="fas fa-minus mr-2"></i></a>
+                    {{ item.quantity }}
+                    <a href="{% url 'change_quantity' item.product.id %}?action=increase"><i class="fas fa-plus ml-2"></i></a>
+                </td>
+                <td>
+                    <p>N {{ item.product.discount_price }}</p>
+                 
+                 <a href="{% url 'remove_from_cart' item.product.id %}">
+                    <i class="fas fa-trash float-right text-danger"></i>
+                 </a>
+    
+                </td>
+            </tr>
+    
+            {% empty %}
+            <tr>
+                <td colspan="5" >Your Cart Empty...!</td>
+            </tr>
+    
+             <tr>
+                <td colspan="5">
+                    <a href="/" class="btn btn-primary float-right">Continue Shopping</a>
+                </td>
+            </tr>
+            
+            {% endfor %}
+
+    
+            {% if cart.get_total_cost %}
+            <tr style="font-weight: 500;">
+                <td colspan="4"><b>Total Order Price</b></td>
+                <td> N {{ cart.get_total_cost }}</td>
+            </tr>
+             <tr>
+                <td colspan="5">
+                    <a href="{% url 'checkout' %}" class="btn-sm btn-warning float-right ml-2">Checkout</a>
+                    <a href="/" class="btn-sm btn-outline-warning float-right">Continue Shopping</a>
+                </td>
+            </tr>
+            
+            {% endif %}
+            
+            </tbody>
+        </table>
+    
+            </div>
+        </div>
+    </main> 
+    
+{% endblock content %}

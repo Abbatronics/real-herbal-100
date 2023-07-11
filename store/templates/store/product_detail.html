@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+   {{ item.title}}
+{% endblock %}
+
+{% block content %}
+
+{% if item.image %}
+<div class="mb-0 aspect-ratio-box">
+  
+  
+   <a href="{% url 'product_detail' item.category.slug item.slug %}">
+    <div class="mask rgba-white-slight"></div>
+    <div class="aspect-ratio-box">
+      <img src= "{{item.image.url}}" style="width: 500px; height: 500px;  "
+      alt="{{ item.title  }}">
+    </div>
+    <h3 style = "font-weight: 900; color: seagreen;  align-items: last baseline;" >
+      {{ item.title}}
+      
+     </h3>
+     <p class="mb-0 mr-100 d-flex flex-column align-items-start red-text"><s>N{{ item.price }}</s></p>
+     <p class="mb-0 d-flex flex-column align-items-start grey-text">N{{ item.discount_price }}
+      / <a href="{% url 'vendor_detail' item.user.id %}" style="color :grey";>Store: {% firstof item.user.get_full_name item.user.username %}</a>
+     </p>
+   </a>
+  {% endif %}
+   {% if item.meta_description %}
+      <p>  
+         {{item.meta_description}}
+
+      </p>
+   {% endif %}
+   <a href="{% url 'add_to_cart' item.id %}" class="btn btn-primary btn-md my-0 " >Add to cart
+      <i class="fas fa-shopping-cart ml-1"></i>
+   </a>
+
+
+{% endblock content %}
