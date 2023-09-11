@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-!0(lm-_7^1pkhogz*^^g60bwf1)7zq2&p)iu@r)p+lcsums04e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [https://www.herbalexpress.shop]
 
 
 # Application definition
